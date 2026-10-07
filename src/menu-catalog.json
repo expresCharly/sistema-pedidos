@@ -1,0 +1,664 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "n": "Sándwich de queso con jamón infantil",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_1.png",
+      "d": "Sándwich a la parrilla con papas y fruta. La foto menciona agua punch y jugo de naranja; confirmar bebida en observaciones.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 2,
+      "n": "Lo Mein",
+      "p": 149,
+      "c": "Oriental",
+      "file": "Menu_2.png",
+      "d": "Fideos al wok con brócoli, cebolla, pimiento morrón y salsa de la casa.",
+      "options": [
+        {
+          "label": "Proteína",
+          "values": [
+            "Res",
+            "Pollo",
+            "Camarón"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [
+        "brócoli",
+        "cebolla",
+        "pimiento morrón"
+      ],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 3,
+      "n": "Grilled Cheese Kid Meal",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_3-6.png",
+      "d": "Sándwich de queso a la parrilla con papas, banana, jugo de naranja y 1 ficha.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 4,
+      "n": "Hot Dog Kid Meal",
+      "p": 69,
+      "c": "Infantil",
+      "file": "menu_4-6.png",
+      "d": "Hot dog pequeño con papas, banana, jugo de naranja y 1 ficha.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 5,
+      "n": "Six Burger Kid Meal",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_4-6.png",
+      "d": "Hamburguesa pequeña con papas, banana, jugo de naranja y 1 ficha.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 6,
+      "n": "Six Nuggets Kid Meal",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_4-6.png",
+      "d": "6 nuggets de pollo con papas, banana, jugo de naranja y 1 ficha.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 7,
+      "n": "Mini hamburguesa de res",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_7-10.png",
+      "d": "Con lechuga, jitomate y queso; papas fritas, jugo de naranja y fruta.",
+      "options": [],
+      "x": [],
+      "r": [
+        "lechuga",
+        "jitomate",
+        "queso"
+      ],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 8,
+      "n": "Chicken Tenders infantiles",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_7-10.png",
+      "d": "3 piezas con papas fritas, jugo de naranja y fruta.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 9,
+      "n": "Pan Kids Sandwich",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_7-10.png",
+      "d": "Con papas Sabritas, jugo de naranja y fruta.",
+      "options": [
+        {
+          "label": "Carne",
+          "values": [
+            "Pechuga de pavo",
+            "Jamón de pavo",
+            "Jamón de cerdo"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 10,
+      "n": "Mini Pizza infantil",
+      "p": 89,
+      "c": "Infantil",
+      "file": "menu_7-10.png",
+      "d": "Pizza de 5 pulgadas con jugo de naranja y fruta.",
+      "options": [
+        {
+          "label": "Sabor",
+          "values": [
+            "Pepperoni con tocino",
+            "Pepperoni",
+            "Barbecue Chicken Fajita"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 11,
+      "n": "Hamburguesa de pollo empanizado",
+      "p": 149,
+      "c": "Hamburguesas",
+      "file": "menu_11.png",
+      "d": "Combo con papas fritas y refresco.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 14,
+      "n": "Bowl",
+      "p": 99,
+      "c": "Bowls",
+      "file": "menu_14.png",
+      "d": "Tortilla frita con lechuga, tomate, pepino y cebolla morada.",
+      "options": [
+        {
+          "label": "Proteína",
+          "values": [
+            "Res",
+            "Pollo",
+            "Camarones"
+          ]
+        },
+        {
+          "label": "Salsa",
+          "values": [
+            "Guacamole",
+            "Ranch",
+            "Chipotle"
+          ]
+        }
+      ],
+      "x": [
+        [
+          "Queso",
+          10
+        ],
+        [
+          "Aguacate",
+          15
+        ],
+        [
+          "Extra proteína",
+          20
+        ]
+      ],
+      "r": [
+        "lechuga",
+        "tomate",
+        "pepino",
+        "cebolla morada"
+      ],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 15,
+      "n": "Burrito",
+      "p": 119,
+      "c": "Burritos",
+      "file": "menu_15.png",
+      "d": "Tortilla grande con queso, carne, vegetales y salsa.",
+      "options": [
+        {
+          "label": "Relleno",
+          "values": [
+            "Especial (tocino y pepperoni)",
+            "Beef Fajitas",
+            "Pollo"
+          ]
+        },
+        {
+          "label": "Preparación",
+          "values": [
+            "A la parrilla",
+            "Frito",
+            "Al horno"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [
+        "queso",
+        "salsa"
+      ],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 16,
+      "n": "Pizza quesadilla",
+      "p": 139,
+      "c": "Pizzas",
+      "file": "menu_16.png",
+      "d": "Combo con guacamole y Coca-Cola.",
+      "options": [
+        {
+          "label": "Relleno",
+          "values": [
+            "Especial (pepperoni y tocino)",
+            "Fajitas de res",
+            "Fajitas de pollo"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [
+        "queso",
+        "pico de gallo",
+        "guacamole"
+      ],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 17,
+      "n": "Combo sándwich",
+      "p": 149,
+      "c": "Sándwiches",
+      "file": "menu_17.png",
+      "d": "Con vegetales, bolsa de chips y Coca-Cola de 355 ml. Indica las carnes en observaciones.",
+      "options": [
+        {
+          "label": "Baguette",
+          "values": [
+            "Natural",
+            "Ajoqueso",
+            "Especial de la casa"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 18,
+      "n": "Lonche de carne guisada",
+      "p": 119,
+      "c": "Comida casera",
+      "file": "menu_18.png",
+      "d": "Carne guisada con arroz y frijoles.",
+      "options": [
+        {
+          "label": "Carne",
+          "values": [
+            "Res",
+            "Puerco",
+            "Pollo"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 19,
+      "n": "Desayuno continental",
+      "p": 109,
+      "c": "Desayunos",
+      "file": "menu_19.png",
+      "d": "Con jamón o tocino a elegir.",
+      "options": [
+        {
+          "label": "Acompañamiento",
+          "values": [
+            "Jamón",
+            "Tocino"
+          ]
+        }
+      ],
+      "x": [
+        [
+          "Porción extra de jamón",
+          20
+        ],
+        [
+          "Porción extra de tocino",
+          20
+        ]
+      ],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 20,
+      "n": "Mini Bags",
+      "p": 99,
+      "c": "Sándwiches",
+      "file": "menu_20.png",
+      "d": "Mini Bags del menú 20.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 21,
+      "n": "Chamorro para 2 personas",
+      "p": 299,
+      "c": "Comida casera",
+      "file": "menu_21.png",
+      "d": "Incluye consomé, arroz, tortillas, limón y salsa picante.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 22,
+      "n": "Lonche de costillas con nopales",
+      "p": 119,
+      "c": "Comida casera",
+      "file": "menu_22.png",
+      "d": "Costillas con nopales, arroz y frijoles.",
+      "options": [
+        {
+          "label": "Carne",
+          "values": [
+            "Res",
+            "Puerco",
+            "Pollo"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 23,
+      "n": "Hamburguesa de res a la parrilla",
+      "p": 149,
+      "c": "Hamburguesas",
+      "file": "menu_23.png",
+      "d": "Combo con papas fritas y refresco.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 24,
+      "n": "Parrillada para 6 a 8 personas",
+      "p": 999,
+      "c": "Parrilladas",
+      "file": "menu_24.png",
+      "d": "½ kilo de res, ½ kilo de pollo, ½ kilo de camarones, arroz, frijoles, 25 tortillas y 6 cervezas.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 25,
+      "n": "Parrillada para 4 personas",
+      "p": 599,
+      "c": "Parrilladas",
+      "file": "menu_25.png",
+      "d": "¼ de res, ¼ de pollo, ¼ de camarones, arroz, frijoles, 15 tortillas y 4 ampolletas.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 26,
+      "n": "Combo boneless",
+      "p": 139,
+      "c": "Snacks",
+      "file": "menu_26.png",
+      "d": "6 boneless de pechuga de pollo con papas a la francesa.",
+      "options": [
+        {
+          "label": "Salsa",
+          "values": [
+            "Mango habanero",
+            "Barbecue"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 27,
+      "n": "Torti Pizza",
+      "p": 129,
+      "c": "Pizzas",
+      "file": "menu_27.png",
+      "d": "Torti Pizza sola.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 28,
+      "n": "Baguette pepperoni",
+      "p": 69,
+      "c": "Sándwiches",
+      "file": "menu_28.png",
+      "d": "Pan baguette con salsa de tomate estilo italiano, mozzarella y pepperoni.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 29,
+      "n": "Torty Bites (3 piezas)",
+      "p": 99,
+      "c": "Pizzas",
+      "file": "menu_29.png",
+      "d": "Elige tres sabores, iguales o combinados.",
+      "options": [
+        {
+          "label": "Sabor 1",
+          "values": [
+            "Pepperoni",
+            "Hawaiana (jamón con piña)",
+            "Salchicha"
+          ]
+        },
+        {
+          "label": "Sabor 2",
+          "values": [
+            "Pepperoni",
+            "Hawaiana (jamón con piña)",
+            "Salchicha"
+          ]
+        },
+        {
+          "label": "Sabor 3",
+          "values": [
+            "Pepperoni",
+            "Hawaiana (jamón con piña)",
+            "Salchicha"
+          ]
+        }
+      ],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 30,
+      "n": "Papas fritas",
+      "p": 119,
+      "c": "Snacks",
+      "file": "menu_7-10.png",
+      "d": "Con kétchup y ranch.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 31,
+      "n": "Combo Torti Pizza",
+      "p": 179,
+      "c": "Pizzas",
+      "file": "menu_27.png",
+      "d": "Torti Pizza con Coca-Cola de 1.5 L.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    },
+    {
+      "id": 32,
+      "n": "Combo baguette pepperoni",
+      "p": 99,
+      "c": "Sándwiches",
+      "file": "menu_28.png",
+      "d": "Baguette pepperoni con refresco.",
+      "options": [],
+      "x": [],
+      "r": [],
+      "e": "🍽️",
+      "a": 1
+    }
+  ],
+  "gallery": [
+    {
+      "file": "menu_1.png",
+      "title": "1 · Sándwich infantil"
+    },
+    {
+      "file": "Menu_2.png",
+      "title": "2 · Lo Mein"
+    },
+    {
+      "file": "menu_3-6.png",
+      "title": "3–6 · Menú infantil"
+    },
+    {
+      "file": "menu_4-6.png",
+      "title": "4–6 · Combos infantiles"
+    },
+    {
+      "file": "menu_7-10.png",
+      "title": "7–10 · Infantil y papas"
+    },
+    {
+      "file": "menu_11.png",
+      "title": "11 · Hamburguesa de pollo"
+    },
+    {
+      "file": "menu_14.png",
+      "title": "14 · Bowls"
+    },
+    {
+      "file": "menu_15.png",
+      "title": "15 · Burritos"
+    },
+    {
+      "file": "menu_16.png",
+      "title": "16 · Pizza quesadilla"
+    },
+    {
+      "file": "menu_17.png",
+      "title": "17 · Combo sándwich"
+    },
+    {
+      "file": "menu_18.png",
+      "title": "18 · Lonche"
+    },
+    {
+      "file": "menu_19.png",
+      "title": "19 · Desayuno continental"
+    },
+    {
+      "file": "menu_20.png",
+      "title": "20 · Mini Bags"
+    },
+    {
+      "file": "menu_21.png",
+      "title": "21 · Chamorro"
+    },
+    {
+      "file": "menu_22.png",
+      "title": "22 · Costillas con nopales"
+    },
+    {
+      "file": "menu_23.png",
+      "title": "23 · Hamburguesa de res"
+    },
+    {
+      "file": "menu_24.png",
+      "title": "24 · Parrillada para 6–8"
+    },
+    {
+      "file": "menu_25.png",
+      "title": "25 · Parrillada para 4"
+    },
+    {
+      "file": "menu_26.png",
+      "title": "26 · Boneless"
+    },
+    {
+      "file": "menu_27.png",
+      "title": "27 · Torti Pizza"
+    },
+    {
+      "file": "menu_28.png",
+      "title": "28 · Baguette pepperoni"
+    },
+    {
+      "file": "menu_29.png",
+      "title": "29 · Torty Bites"
+    }
+  ]
+}

@@ -1,27 +1,13 @@
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const money=n=>'$'+Number(n).toFixed(2);
-const CATS=['Todo','Hamburguesas','Tacos','Tortas','Platillos','Bebidas','Postres'];
-let P=[
-{id:1,n:'Hamburguesa Especial',p:95,c:'Hamburguesas',e:'🍔',d:'Carne, queso y papas',x:[['Extra queso',15],['Tocino',20],['Aguacate',15]],r:['cebolla','tomate','chile'],a:1},
-{id:2,n:'Hamburguesa Sencilla',p:70,c:'Hamburguesas',e:'🍔',d:'Clásica con lechuga',x:[['Extra queso',15],['Tocino',20]],r:['cebolla','tomate'],a:1},
-{id:3,n:'Tacos de asada',p:25,c:'Tacos',e:'🌮',d:'Con cebolla y cilantro',x:[['Queso',12],['Guacamole',10]],r:['cebolla','cilantro','chile'],a:1},
-{id:4,n:'Tacos al pastor',p:22,c:'Tacos',e:'🌮',d:'Con piña',x:[['Queso',12]],r:['cebolla','piña','cilantro'],a:1},
-{id:5,n:'Torta de milanesa',p:80,c:'Tortas',e:'🥪',d:'Aguacate y jitomate',x:[['Jamón',15],['Queso',12]],r:['cebolla','chile'],a:1},
-{id:6,n:'Torta cubana',p:95,c:'Tortas',e:'🥪',d:'Todo en una torta',x:[['Queso',12]],r:['cebolla','chile'],a:0},
-{id:7,n:'Alambre',p:120,c:'Platillos',e:'🍲',d:'Res, tocino, queso y tortillas',x:[['Extra queso',15]],r:['pimiento','cebolla'],a:1},
-{id:8,n:'Papas con queso',p:55,c:'Platillos',e:'🍟',d:'Con aderezo',x:[['Tocino',20]],r:[],a:1},
-{id:9,n:'Coca-Cola',p:25,c:'Bebidas',e:'🥤',d:'355 ml',x:[],r:['hielo'],a:1},
-{id:10,n:'Agua de horchata',p:30,c:'Bebidas',e:'🧃',d:'Vaso grande',x:[],r:['hielo'],a:1},
-{id:11,n:'Limonada',p:30,c:'Bebidas',e:'🍋',d:'Natural o mineral',x:[],r:['hielo','azúcar'],a:1},
-{id:12,n:'Flan napolitano',p:40,c:'Postres',e:'🍮',d:'Casero',x:[],r:[],a:1}];
+const MENU=JSON.parse($('#app').dataset.menuCatalog);
+const menuImage=file=>$('#app').dataset.baseUrl+'menus/'+file;
+const CATS=['Todo',...new Set(MENU.products.map(p=>p.c))];
+let P=MENU.products.map(p=>({...p,img:menuImage(p.file)}));
 const it=(id,q,m=[],nt='',s=1)=>{let p=P.find(x=>x.id==id);return{pid:id,n:p.n,p:p.p,q,m,nt,s}};
 let T=[1,2,3,4,5,6,7,8,9,10].map(i=>({id:i,seats:[2,4,4,6,2,4,4,6,8,2][i-1],st:'free',items:[],since:0,k:null,mesero:'Carlos'}));
-T[1]={...T[1],st:'busy',since:32,items:[it(1,2,['Sin cebolla']),it(9,2)]};
-T[2]={...T[2],st:'pending',since:14,k:'cook',items:[it(3,4),it(10,2)]};
-T[4]={...T[4],st:'ready',since:21,k:'ready',items:[it(5,2),it(11,2)]};
-T[6]={...T[6],st:'bill',since:55,items:[it(7,2),it(9,4),it(12,2)]};
-let H=[{n:1038,t:'Mesa 3',w:'Carlos',f:'06/10 13:12',tot:340,pay:'Efectivo',s:'Pagado'},{n:1039,t:'Mesa 5',w:'Ana',f:'06/10 13:40',tot:215,pay:'Tarjeta',s:'Pagado'},{n:1040,t:'Llevar',w:'Ana',f:'06/10 14:05',tot:180,pay:'Transferencia',s:'Pagado'}];
+let H=[];
 let S={view:'login',role:'mesero',tab:'dash',cur:null,cat:'Todo',q:'',modal:null,pay:null,orderN:1042,cq:''};
 const total=t=>t.items.filter(i=>i.st!='canc').reduce((a,i)=>a+(i.p+(i.xs||0))*i.q,0);
 const lbl={free:'Disponible',busy:'Ocupada',pending:'Preparando',ready:'Listo',bill:'Cuenta'};
@@ -29,11 +15,18 @@ const col={free:'--g',busy:'--o',pending:'--y',ready:'--bl',bill:'--r'};
 function toast(m){let d=document.createElement('div');d.className='toast';d.textContent=m;document.body.append(d);setTimeout(()=>d.remove(),1800)}
 function go(v,o={}){Object.assign(S,{view:v},o);render()}
 function header(){let tabs={mesero:['tables','Mesas'],cocina:['kitchen','Cocina'],caja:['cash','Caja'],admin:['admin','Admin']};
-return `<header><span class="logo">COMIDA EXPRESS CHARLY</span>${Object.entries(tabs).map(([r,[v,l]])=>`<button class="tab ${S.role==r?'on':''}" onclick="S.role='${r}';go('${v}',{cur:null})">${l}</button>`).join('')}<span class="mod">${new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}</span>${bell()}<button onclick="toast('Perfil: Carlos (mesero)')">👤 Carlos</button><button class="sec" onclick="go('login')">Salir</button></header>`}
-function vLogin(){return `<div class="login"><img class="login-logo" src="${$('#app').dataset.logoUrl}" alt="Comida Express Charly" width="1536" height="1024"><p class="mod">Sistema de pedidos</p><input placeholder="Usuario o correo" value="carlos@charly.mx"><input type="password" placeholder="Contraseña" value="1234"><div class="roles">${['mesero','cocina','caja','admin'].map(r=>`<button class="${S.role==r?'tab on':'tab'}" onclick="S.role='${r}';render()">${r}</button>`).join('')}</div><button class="pri" style="width:100%" onclick="go({mesero:'tables',cocina:'kitchen',caja:'cash',admin:'admin'}[S.role])">Iniciar sesión</button></div>`}
-function openM(id){S.modal={id,q:1,x:[],r:[],nt:''};render()}
+return `<header><span class="logo">COMIDA EXPRESS CHARLY</span>${Object.entries(tabs).map(([r,[v,l]])=>`<button class="tab ${S.role==r?'on':''}" onclick="S.role='${r}';go('${v}',{cur:null})">${l}</button>`).join('')}<button class="sec" onclick="openMenus()">Menú en fotos</button><span class="mod">${new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}</span>${bell()}<button onclick="toast('Perfil: Carlos (mesero)')">👤 Carlos</button><button class="sec" onclick="go('login')">Salir</button></header>`}
+function togglePassword(button){
+  const input = document.getElementById('login-password');
+  const visible = input.type === 'password';
+  input.type = visible ? 'text' : 'password';
+  button.setAttribute('aria-pressed', String(visible));
+  button.setAttribute('aria-label', visible ? 'Ocultar contraseña' : 'Mostrar contraseña');
+}
+function vLogin(){return `<div class="login"><img class="login-logo" src="${$('#app').dataset.logoUrl}" alt="Comida Express Charly" width="1536" height="1024"><p class="mod">Sistema de pedidos</p><input placeholder="Usuario o correo" value="exprescharlys_SP@gmail.com"><div class="password-field"><input id="login-password" type="password" placeholder="Contraseña" aria-label="Contraseña" value="sistema_pedidos123"><button type="button" class="password-toggle" aria-label="Mostrar contraseña" aria-controls="login-password" aria-pressed="false" onclick="togglePassword(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="m3 3 18 18"/></svg></button></div><div class="roles">${['mesero','cocina','caja','admin'].map(r=>`<button class="${S.role==r?'tab on':'tab'}" onclick="S.role='${r}';render()">${r}</button>`).join('')}</div><button class="pri" style="width:100%" onclick="go({mesero:'tables',cocina:'kitchen',caja:'cash',admin:'admin'}[S.role])">Iniciar sesión</button></div>`}
+function openM(id){S.modal={id,q:1,x:[],r:[],nt:'',choices:{}};render()}
 function vModal(){let m=S.modal,p=P.find(x=>x.id==m.id),ex=m.x.reduce((a,i)=>a+p.x[i][1],0);
-return `<div class="mk" onclick="if(event.target==this){S.modal=null;render()}"><div class="md"><h2 style="font-size:2.4rem">${p.n}</h2><div class="big">${money(p.p)}</div>
+return `<div class="mk" onclick="if(event.target==this){S.modal=null;render()}"><div class="md"><h2 style="font-size:2.4rem">${p.n}</h2><div class="big">${money(p.p)}</div><p class="mod">${p.d}</p>${productOptions(p,m)}
 <b class="mod">CANTIDAD</b><div class="q" style="margin:.4rem 0 1rem"><button onclick="S.modal.q=Math.max(1,S.modal.q-1);render()">−</button><span class="big" style="color:#fff;min-width:40px;text-align:center">${m.q}</span><button onclick="S.modal.q++;render()">+</button></div>
 ${p.x.length?'<b class="mod">EXTRAS</b>'+p.x.map((x,i)=>`<label class="chk"><input type="checkbox" ${m.x.includes(i)?'checked':''} onchange="tg('x',${i})">${x[0]} <b style="margin-left:auto;color:var(--y)">+$${x[1]}</b></label>`).join(''):''}
 ${p.r.length?'<b class="mod">QUITAR</b>'+p.r.map((x,i)=>`<label class="chk"><input type="checkbox" ${m.r.includes(i)?'checked':''} onchange="tg('r',${i})">Sin ${x}</label>`).join(''):''}
@@ -41,7 +34,8 @@ ${p.r.length?'<b class="mod">QUITAR</b>'+p.r.map((x,i)=>`<label class="chk"><inp
 <button class="pri" style="width:100%" onclick="addI()">Agregar a la orden · ${money((p.p+ex)*m.q)}</button></div></div>`}
 function tg(k,i){let a=S.modal[k];a.includes(i)?a.splice(a.indexOf(i),1):a.push(i);render()}
 function addI(){let m=S.modal,p=P.find(x=>x.id==m.id),t=T.find(x=>x.id==S.cur);
-let mods=[...m.x.map(i=>p.x[i][0]),...m.r.map(i=>'Sin '+p.r[i])],x=it(p.id,m.q,mods,m.nt,0);x.xs=m.x.reduce((a,i)=>a+p.x[i][1],0);
+if((p.options||[]).some((o,i)=>!m.choices[i]))return toast('Selecciona todas las opciones del platillo');
+let mods=[...(p.options||[]).map((o,i)=>o.label+': '+m.choices[i]),...m.x.map(i=>p.x[i][0]),...m.r.map(i=>'Sin '+p.r[i])],x=it(p.id,m.q,mods,m.nt,0);x.xs=m.x.reduce((a,i)=>a+p.x[i][1],0);
 t.items.push(x);S.modal=null;toast('✔ '+p.n+' agregado');render()}
 function vCash(){let L=T.filter(t=>t.items.length&&t.st!='free'&&String(t.id).includes(S.cq));
 return header()+`<main><div class="split"><section><h1 style="font-size:2.6rem">CAJA</h1><input placeholder="🔍 Buscar mesa" value="${S.cq}" oninput="S.cq=this.value;render();$('input').focus()" style="margin:.6rem 0 1rem"><div class="grid">${L.map(t=>`<button class="mesa s-${t.st}" onclick="S.pay={id:${t.id},disc:0,m:'Efectivo',rec:''};render()"><h2>Mesa ${t.id}</h2><small>${lbl[t.st]}</small><div class="pr">${money(total(t))}</div></button>`).join('')}</div></section>
@@ -66,14 +60,14 @@ body=`<div class="stats">${[['Ventas del día',money(sales)],['Órdenes',H.lengt
 return header()+`<main><div class="sw" style="flex-wrap:wrap">${tabs.map(t=>`<button class="${S.tab==t[0]?'pri':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join('')}</div>${X(body)}</main>`}
 
 const USER='Carlos',ST={new:['🆕','NUEVO','--y'],prep:['🔥','PREPARANDO','--o'],ready:['🔔','LISTO','--bl'],served:['✔','SERVIDO','--g'],canc:['✖','CANCELADO','--r']},WHY=['Cliente cambió de opinión','Producto incorrecto','Error del mesero','Producto agotado','Otro'];
-let N=[{id:5,l:'Mesa 5',n:2,seen:0}],TKN=24;
+let N=[],TKN=24;
 Object.assign(S,{f:'all',mine:0,nf:0,m2:null});
 const mins=t=>Math.floor((Date.now()-t.open)/6e4),hm=()=>new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),cnt=(t,s)=>t.items.filter(i=>i.st==s).length,pad=n=>String(n).padStart(3,'0');
 T.forEach((t,k)=>{t.open=Date.now()-t.since*6e4;t.pers=t.seats;t.cli=t.cli||'';if(k==1)t.mesero='Ana';t.items.forEach(i=>{i.r=1;i.at=t.open;i.h=hm();i.st=i.st||(t.st=='ready'?'ready':t.st=='pending'?'prep':'served')})});
 function sync(t){if(t.tk){t.st=t.items.length&&t.items.every(i=>i.s&&['served','canc'].includes(i.st))?'done':'busy';return}if(['free','bill'].includes(t.st))return;t.st=cnt(t,'ready')?'ready':cnt(t,'prep')?'pending':'busy'}
 const tkS=t=>t.st=='done'?'✔ Entregado':cnt(t,'ready')?'🔔 Listo':t.items.some(i=>i.cook&&i.st=='prep')?'🔥 Preparando':'🆕 Nuevo';
 function bell(){let u=N.filter(n=>!n.seen).length;return `<button class="${u?'pri':''}" onclick="S.nf=!S.nf;render()">🔔 ${u||''}</button>${S.nf?`<div class="card nfp">${N.length?N.map((n,i)=>`<button style="display:block;width:100%;text-align:left;text-transform:none;margin:.3rem 0;${n.seen?'opacity:.5':''}" onclick="N[${i}].seen=1;S.nf=0;S.role='mesero';openT('${n.id}')">🔔 <b>${n.l}</b><br>${n.n} producto${n.n>1?'s':''} listo${n.n>1?'s':''} para entregar</button>`).join(''):'<span class="mod">Sin notificaciones</span>'}</div>`:''}`}
-function render(){let v={login:vLogin,tables:vTables,order:vOrder,kitchen:vKitchen,cash:vCash,admin:vAdmin}[S.view];$('#app').innerHTML=v()+(S.m2?vM2():'')}
+function render(){let v={login:vLogin,tables:vTables,order:vOrder,kitchen:vKitchen,cash:vCash,admin:vAdmin,menus:vMenus}[S.view];$('#app').innerHTML=v()+(S.m2?vM2():'')}
 function vTables(){let F=[['all','Todas'],['free','Disponibles'],['busy','Ocupadas'],['ready','Listas'],['bill','Cuenta']];
 let L=T.filter(t=>!t.tk&&!t.into&&(!S.mine||(t.mesero==USER&&t.st!='free'))&&({all:1,free:t.st=='free',busy:!['free','bill'].includes(t.st),ready:cnt(t,'ready')>0,bill:t.st=='bill'})[S.f]),K=T.filter(t=>t.tk);
 return header()+`<main><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap"><h1 style="font-size:2.6rem">MESAS</h1><div style="display:flex;gap:.5rem;flex-wrap:wrap"><button class="${S.mine?'pri':''}" onclick="S.mine^=1;render()">👤 Mis mesas</button><button class="sec" onclick="S.m2={k:'tk',cli:'',tel:''};render()">🥡 Para llevar</button><button class="pri" onclick="newOrder()">+ Nueva orden</button></div></div>
@@ -85,10 +79,10 @@ function openT(id){let t=T.find(x=>x.id==id);if(t.st=='free'){S.m2={k:'open',id:
 function doOpen(){let m=S.m2,t=T.find(x=>x.id==m.id);Object.assign(t,{st:'busy',pers:m.p,cli:m.cli,mesero:USER,orig:USER,join:0,open:Date.now(),items:[],k:null});toast('Mesa '+t.id+' abierta');go('order',{cur:t.id,cat:'Todo',q:'',m2:null})}
 function doTk(){let m=S.m2,t={id:'L'+TKN,tk:1,tn:TKN++,cli:m.cli||'Cliente',tel:m.tel,st:'busy',items:[],open:Date.now(),mesero:USER,seats:0,pers:0};T.push(t);go('order',{cur:t.id,cat:'Todo',q:'',m2:null})}
 function line(i,n){let s=ST[i.st||'new'];return `<div class="line ${!i.s?'new':'sent'}" style="${i.st=='canc'?'opacity:.5':''}"><div><b>${i.n}</b> x${i.q}<div class="mod">${i.m.join(' · ')}${i.nt?' · “'+i.nt+'”':''}${i.why?' · Motivo: '+i.why:''}</div><span class="tag" style="background:var(${s[2]});color:#000">${s[0]} ${s[1]}</span></div><div style="text-align:right">${i.st=='canc'?'—':money((i.p+(i.xs||0))*i.q)}${!i.s?`<div class="q"><button onclick="qty(${n},-1)">−</button><button onclick="qty(${n},1)">+</button><button class="red" onclick="qty(${n},-99)">✖</button></div>`:i.st!='canc'?`<button class="sec" style="min-height:40px;padding:.2rem .6rem;font-size:.9rem;margin-top:.3rem" onclick="S.m2={k:'cancel',id:'${S.cur}',n:${n},why:'',o:''};render()">Solicitar cancelación</button>`:''}</div></div>`}
-function vOrder(){let t=T.find(x=>x.id==S.cur),ps=P.filter(p=>!p.dx&&(S.cat=='Todo'||p.c==S.cat)&&p.n.toLowerCase().includes(S.q.toLowerCase())),nw=t.items.filter(i=>!i.s).length,rd=cnt(t,'ready'),rs=[...new Set(t.items.filter(i=>i.s).map(i=>i.r))],nr=Math.max(0,...rs)+1;
-return header()+`<main><div class="split"><section><div style="display:flex;gap:.6rem;align-items:center"><button onclick="go('tables')">← Mesas</button><input id="sq" placeholder="🔍 Buscar producto" value="${S.q}" oninput="S.q=this.value;render();$('#sq').focus();$('#sq').setSelectionRange(99,99)"></div>
+function vOrder(){let t=T.find(x=>x.id==S.cur),ps=P.filter(p=>!p.dx&&(S.cat=='Todo'||p.c==S.cat)&&(p.n+' '+p.d+' '+p.id).toLowerCase().includes(S.q.toLowerCase())),nw=t.items.filter(i=>!i.s).length,rd=cnt(t,'ready'),rs=[...new Set(t.items.filter(i=>i.s).map(i=>i.r))],nr=Math.max(0,...rs)+1;
+return header()+`<main class="order-page"><div class="split"><section><div class="order-search"><button onclick="go('tables')">← Mesas</button><input id="sq" placeholder="🔍 Buscar producto" value="${S.q}" oninput="S.q=this.value;render();$('#sq').focus();$('#sq').setSelectionRange(99,99)"></div>
 <div class="cats">${CATS.filter(c=>!CD.has(c)).map(c=>`<button class="${S.cat==c?'pri':''}" onclick="S.cat='${c}';render()">${c}</button>`).join('')}</div>
-<div class="grid">${ps.map(p=>`<button class="card prod ${p.a?'':'off'}" onclick="openM(${p.id})"><div class="img">${pimg(p)}</div><div class="bd"><b>${p.n}</b><span class="pr">${money(p.p)}</span><p>${p.d}</p></div></button>`).join('')}</div></section>
+<div class="grid">${ps.map(p=>`<button class="card prod ${p.a?'':'off'}" onclick="openM(${p.id})"><div class="img">${pimg(p)}</div><div class="bd"><span class="mod">#${p.id} · ${p.c}</span><b>${p.n}</b><span class="pr">${money(p.p)}</span><p>${p.d}</p></div></button>`).join('')}</div></section>
 <aside class="card ord"><h2 style="font-size:2.2rem;color:var(--y)">${t.tk?'PARA LLEVAR #'+pad(t.tn):t.join?'MESAS '+t.join.join(' + '):'MESA '+t.id}</h2><span class="mod">${t.tk?t.cli+(t.tel?' · '+t.tel:''):t.pers+' personas'+(t.cli?' · '+t.cli:'')+' · '+t.mesero+(t.orig&&t.orig!=t.mesero?' (orig. '+t.orig+')':'')+' · ⏱ '+mins(t)+' min'}</span>
 <div style="margin:.6rem 0">${rs.map(r=>`<div style="margin-top:.6rem"><b>Ronda ${r}</b> — ${t.items.find(i=>i.r==r).h} <span class="tag">ENVIADO</span></div>`+t.items.map((i,n)=>i.s&&i.r==r?line(i,n):'').join('')).join('')}
 ${nw?`<div style="margin-top:.6rem"><b>Ronda ${nr}</b> <span class="tag" style="background:var(--y);color:#000">🆕 NUEVO</span></div>`+t.items.map((i,n)=>i.s?'':line(i,n)).join(''):''}${t.items.length?'':'<p class="mod">Sin productos. Toca un platillo para agregarlo.</p>'}</div>
@@ -118,9 +112,8 @@ function kset(id,r,k){let t=T.find(x=>x.id==id),is=t.items.filter(i=>i.r==r&&i.s
 const CD=new Set(),EMO=['🍔','🌮','🥪','🍲','🍟','🥤','🧃','🍋','🍮','🍗'],ROLES=['Administrador','Caja','Mesero','Cocina'],TD=new Date().toISOString().slice(0,10),HF={q:'',w:'',ty:'',s:'',pay:'',d1:'',d2:''},mkI=a=>a.map(([n,q,p])=>({n,q,p})),SI={1038:[['Hamburguesa Especial',2,95],['Tacos de asada',4,25],['Coca-Cola',2,25]],1039:[['Alambre',1,120],['Hamburguesa Sencilla',1,70],['Coca-Cola',1,25]],1040:[['Hamburguesa Especial',1,95],['Papas con queso',1,55],['Limonada',1,30]]};
 let E=[{n:'Carlos Ruiz',u:'carlos',r:'Mesero',a:1},{n:'Ana López',u:'ana',r:'Mesero',a:1},{n:'Luis Mora',u:'luis',r:'Cocina',a:1},{n:'Marta Díaz',u:'marta',r:'Caja',a:1},{n:'Charly',u:'admin',r:'Administrador',a:1}];
 H.forEach(h=>{h.d=TD;h.it=mkI(SI[h.n]||[])});
-H.push({n:1030,t:'Mesa 2',w:'Ana',f:'05/10 20:15',d:'2026-10-05',tot:380,pay:'Tarjeta',s:'Pagado',it:mkI([['Alambre',2,120],['Limonada',2,30],['Flan napolitano',2,40]])},{n:1031,t:'Llevar #021',w:'Carlos',f:'05/10 21:02',d:'2026-10-05',tot:95,pay:'Efectivo',s:'Cancelado',it:mkI([['Torta cubana',1,95]])});
 T.forEach(t=>t.orig=t.mesero);
-const pimg=(p,z)=>p.img?`<img src="${p.img}" style="width:${z?'36px':'100%'};height:${z?'36px':'90px'};object-fit:cover;border-radius:6px">`:p.e,X=b=>({menu:vProd,cat:vCat,emp:vEmp,hist:vHist}[S.tab]||(()=>b))(),bs='min-height:40px;padding:.3rem .8rem';
+const pimg=(p,z)=>p.img?`<img src="${p.img}" style="width:${z?'36px':'100%'};height:${z?'36px':'90px'};object-fit:contain;border-radius:6px" alt="${p.n}" loading="lazy">`:p.e,X=b=>({menu:vProd,cat:vCat,emp:vEmp,hist:vHist}[S.tab]||(()=>b))(),bs='min-height:40px;padding:.3rem .8rem';
 const L=t=>`<b class="mod">${t}</b>`,W=h=>`<div class="mk" onclick="if(event.target==this){S.m2=null;render()}"><div class="md">${h}<button class="sec" style="width:100%;margin-top:.6rem" onclick="S.m2=null;render()">Cerrar</button></div></div>`;
 function chips(a,cur,fn){return a.map(c=>`<button class="chk inl ${cur==c?'on':''}" onclick="${fn}('${c}');render()">${c}</button>`).join(' ')}
 function vM2(){let m=S.m2,t=T.find(x=>x.id==m.id),d=m.d;
@@ -148,5 +141,17 @@ function vHist(){let R=H.map((h,i)=>({h,i})).filter(({h})=>(!HF.q||(h.t+h.n).toL
 let o=(k,a)=>`<select onchange="HF.${k}=this.value;render()"><option value="">${a[0]}</option>${a.slice(1).map(v=>`<option ${HF[k]==v?'selected':''}>${v}</option>`).join('')}</select>`;
 return `<div class="card"><div class="row" style="flex-wrap:wrap"><input style="max-width:180px" placeholder="🔍 Mesa o #" value="${HF.q}" onchange="HF.q=this.value;render()">${o('w',['Mesero',...E.filter(e=>e.r=='Mesero').map(e=>e.n.split(' ')[0])])}${o('ty',['Tipo','Mesa','Llevar'])}${o('s',['Estado','Pagado','Entregado','Cancelado'])}${o('pay',['Pago','Efectivo','Tarjeta','Transferencia','Mixto'])}<label class="mod">Del <input type="date" value="${HF.d1}" onchange="HF.d1=this.value;render()" style="width:auto"></label><label class="mod">al <input type="date" value="${HF.d2}" onchange="HF.d2=this.value;render()" style="width:auto"></label><button onclick="Object.assign(HF,{q:'',w:'',ty:'',s:'',pay:'',d1:'',d2:''});render()">Limpiar</button></div><div style="overflow-x:auto"><table><tr><th>#</th><th>Mesa</th><th>Mesero</th><th>Fecha</th><th>Total</th><th>Pago</th><th>Estado</th></tr>${R.map(({h,i})=>`<tr style="cursor:pointer" onclick="S.m2={k:'hd',i:${i}};render()"><td>${h.n}</td><td>${h.t}</td><td>${h.w}</td><td>${h.f}</td><td>${money(h.tot)}</td><td>${h.pay}</td><td>${h.s}</td></tr>`).join('')||'<tr><td colspan="7" class="mod">Sin resultados</td></tr>'}</table></div><p class="mod">Toca un pedido para ver su detalle.</p></div>`}
 
-render();
 
+function productOptions(p,m){return (p.options||[]).map((o,i)=>`<label class="menu-choice">${o.label}<select onchange="S.modal.choices[${i}]=this.value"><option value="">Selecciona una opción</option>${o.values.map(v=>`<option ${m.choices[i]===v?'selected':''}>${v}</option>`).join('')}</select></label>`).join('')}
+function openMenus(){if(S.view!=='menus')S.menuReturn=S.view;go('menus')}
+function vMenus(){return header()+`<main><div class="menu-heading"><div><h1>Menú en fotos</h1><p class="mod">${MENU.gallery.length} imágenes · Toca una foto para ampliarla.</p></div><button onclick="go(S.menuReturn||'tables')">← Volver</button></div><div class="menu-gallery">${MENU.gallery.map((m,i)=>`<button class="card menu-photo" onclick="showMenuPhoto(${i})"><img src="${menuImage(m.file)}" alt="${m.title}" loading="lazy"><span>${m.title}</span></button>`).join('')}</div></main>`}
+function showMenuPhoto(index){
+  const m=MENU.gallery[index],dialog=document.createElement('dialog');
+  dialog.className='menu-lightbox';
+  dialog.innerHTML=`<div class="menu-heading"><h2>${m.title}</h2><button autofocus onclick="this.closest('dialog').close()">Cerrar ✕</button></div><div class="menu-photo-scroll"><img src="${menuImage(m.file)}" alt="${m.title}"></div><div class="sw"><button onclick="this.closest('dialog').close();showMenuPhoto(${(index+MENU.gallery.length-1)%MENU.gallery.length})">← Anterior</button><button onclick="this.closest('dialog').close();showMenuPhoto(${(index+1)%MENU.gallery.length})">Siguiente →</button></div>`;
+  dialog.addEventListener('close',()=>dialog.remove());
+  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+  document.body.append(dialog);dialog.showModal();
+}
+
+render();
